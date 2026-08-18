@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prophet-directional-trader"
+version = "0.1.0"
+description = "A guarded Kalshi directional trader based on proper Brier betting."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "Nithin K" }]
+keywords = ["kalshi", "prediction-markets", "paper-trading", "forecasting", "brier-score"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Office/Business :: Financial :: Investment",
+]
+dependencies = [
+  "cryptography>=41.0.0",
+  "google-genai>=2.13.0",
+  "httpx>=0.27.0",
+  "requests>=2.31.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/NiTHIN-K/prophet-directional-trader"
+Repository = "https://github.com/NiTHIN-K/prophet-directional-trader"
+Issues = "https://github.com/NiTHIN-K/prophet-directional-trader/issues"
+
+[project.scripts]
+prophet-trader = "prophet_trader.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pyright]
+include = ["src", "tests"]
+pythonVersion = "3.11"
+typeCheckingMode = "standard"
