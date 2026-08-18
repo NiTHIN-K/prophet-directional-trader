@@ -4,13 +4,23 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-3776AB)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-2ea44f)](LICENSE)
 
-A safety-first Kalshi paper trader that reproduces the directional forecasting workflow from
-[“When do prophets profit in prediction markets?”](https://arxiv.org/abs/2607.06166). It combines
-fixed-cadence probability forecasts, executable bid/ask prices, proper Brier targets, risk-aware
-position sizing, and a durable SQLite shadow ledger.
+A paper-only prediction-market research system that reproduces the directional forecasting
+workflow from [“When do prophets profit in prediction markets?”](https://arxiv.org/abs/2607.06166).
+It combines fixed-cadence probability forecasts, executable bid/ask prices, proper Brier targets,
+risk-aware position sizing, and a durable SQLite shadow ledger.
 
 Strict replication mode is intentionally paper-only. Live order submission is rejected by
 configuration validation and by the command-line interface.
+
+## Portfolio focus
+
+This project highlights backend engineering practices that matter in stateful financial systems:
+
+- durable, transactional state for decisions, requests, positions, and cash;
+- explicit budget reservations and fail-closed circuit handling;
+- idempotent scheduled work protected by a leader lease and database constraints;
+- offline tests covering the decision flow without provider access; and
+- a strict boundary between simulated fills and live order submission.
 
 ## What it demonstrates
 
@@ -103,7 +113,7 @@ prophet-trader status --limit 20
 For cron setup, durable-ledger behavior, health checks, and the kill switch, see
 [Operations](docs/OPERATIONS.md).
 
-## Safety properties
+## Safeguards
 
 Every provider call is reserved in SQLite before submission. The database rejects duplicates by
 market, two-hour slot, model, prompt version, and context hash, with an additional once-per-market
@@ -157,7 +167,7 @@ Coverage includes duplicate-cycle suppression, scheduler isolation, timeout no-r
 quota circuit breaking, daily spend failure, displayed-depth execution, one-sided position exits,
 and context-only event updates.
 
-## Limitations
+## Demonstration boundaries
 
 Shadow fills assume immediate execution at displayed quotes and do not model fees, slippage,
 queue priority, partial fills, or settlement cash flows. Cost reservation is conservative, while

@@ -69,7 +69,6 @@ class OfficialSourceFetcher:
                 current,
                 headers={
                     "Accept": "text/html,application/json,application/pdf,text/plain,*/*;q=0.2",
-                    "User-Agent": "prophet-directional-trader/0.1 official-source-monitor",
                 },
                 timeout=self.settings.official_source_timeout_seconds,
                 allow_redirects=False,
